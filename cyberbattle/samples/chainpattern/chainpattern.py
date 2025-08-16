@@ -72,7 +72,7 @@ ENV_IDENTIFIERS = Identifiers(
     ],
     ports=["HTTPS", "GIT", "SSH", "RDP", "PING", "MySQL", "SSH-key", "su"],
     local_vulnerabilities=["ScanBashHistory", "ScanExplorerRecentFiles", "SudoAttempt", "CrackKeepPassX", "CrackKeepPass"],
-    remote_vulnerabilities=["ProbeLinux", "ProbeWindows"],
+    remote_vulnerabilities=["ProbeLinux", "ProbeWindows","fake1","fake2","fake3","fake4","fake5","fake6","fake7","fake8","fake9"],
 )
 
 

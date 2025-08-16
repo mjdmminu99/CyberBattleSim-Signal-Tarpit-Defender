@@ -106,14 +106,14 @@ nodes = {
                 description="Some secure access token (SAS) leaked in a " "reverted git commit",
                 type=m.VulnerabilityType.REMOTE,
                 precondition=m.Precondition("SasUrlInCommit&GitHub"),
-                outcome=m.LeakedCredentials(credentials=[m.CachedCredential(node="AzureStorage", port="HTTPS", credential="SASTOKEN1")]),
+                outcome=m.LeakedCredentials(credentials=[m.CachedCredential(node="Tarpit-AzureStorage", port="HTTPS", credential="SASTOKEN1")]),
                 rates=m.Rates(probingDetectionRate=0.0, exploitDetectionRate=0.0, successRate=1.0),
                 reward_string="CredScan success: Some secure access token (SAS) was leaked in a reverted git commit",
                 cost=1.0,
             )
         ),
     ),
-    "AzureStorage": m.NodeInfo(
+    "Tarpit-AzureStorage": m.NodeInfo(
         services=[m.ListeningService("HTTPS", allowedCredentials=["SASTOKEN1"])],
         value=50,
         properties=["CTFFLAG:LeakedCustomerData"],
@@ -155,7 +155,7 @@ nodes = {
             ListAzureResources=m.VulnerabilityInfo(
                 description="AzureVM info, including public IP address",
                 type=m.VulnerabilityType.REMOTE,
-                outcome=m.LeakedNodesId(["AzureVM"]),
+                outcome=m.LeakedNodesId(["Tarpit-AzureVM"]),
                 reward_string="Obtained Azure VM and public IP information",
                 cost=1.0,
             )
@@ -167,7 +167,7 @@ nodes = {
         value=50,
         properties=[],
     ),
-    "AzureVM": m.NodeInfo(
+    "Tarpit-AzureVM": m.NodeInfo(
         services=[m.ListeningService("PING"), m.ListeningService("SSH")],
         value=100,
         properties=["CTFFLAG:VMPRIVATEINFO"],
@@ -194,7 +194,12 @@ global_vulnerability_library: Dict[VulnerabilityID, VulnerabilityInfo] = dict([]
 
 # Environment constants
 ENV_IDENTIFIERS = m.infer_constants_from_nodes(cast(Iterator[Tuple[NodeID, NodeInfo]], list(nodes.items())), global_vulnerability_library)
-
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake4")
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake5")
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake6")
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake1")
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake2")
+#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake3")
 
 def new_environment() -> m.Environment:
     return m.Environment(network=m.create_network(nodes), vulnerability_library=global_vulnerability_library, identifiers=ENV_IDENTIFIERS)

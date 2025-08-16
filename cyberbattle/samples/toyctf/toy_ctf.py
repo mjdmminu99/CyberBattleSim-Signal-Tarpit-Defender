@@ -194,12 +194,12 @@ global_vulnerability_library: Dict[VulnerabilityID, VulnerabilityInfo] = dict([]
 
 # Environment constants
 ENV_IDENTIFIERS = m.infer_constants_from_nodes(cast(Iterator[Tuple[NodeID, NodeInfo]], list(nodes.items())), global_vulnerability_library)
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake4")
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake5")
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake6")
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake1")
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake2")
-#ENV_IDENTIFIERS.remote_vulnerabilities.append("fake3")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake4")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake5")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake6")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake1")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake2")
+ENV_IDENTIFIERS.remote_vulnerabilities.append("fake3")
 
 def new_environment() -> m.Environment:
     return m.Environment(network=m.create_network(nodes), vulnerability_library=global_vulnerability_library, identifiers=ENV_IDENTIFIERS)

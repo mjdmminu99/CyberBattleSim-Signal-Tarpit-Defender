@@ -224,7 +224,7 @@ class AgentActions:
     def get_discovered_properties(self, node_id: model.NodeID) -> Set[int]:
         return self._discovered_nodes[node_id].discovered_properties
 
-    def __mark_node_as_discovered(self, node_id: model.NodeID) -> bool:
+    def mark_node_as_discovered(self, node_id: model.NodeID) -> bool:
         logger.info("discovered node: " + node_id)
         newly_discovered = node_id not in self._discovered_nodes
         if newly_discovered:
@@ -284,7 +284,7 @@ class AgentActions:
 
         if isinstance(outcome, model.LeakedCredentials):
             for credential in outcome.credentials:
-                if self.__mark_node_as_discovered(credential.node):
+                if self.mark_node_as_discovered(credential.node):
                     newly_discovered_nodes += 1
                     newly_discovered_nodes_value += self._environment.get_node(credential.node).value
 
@@ -297,7 +297,7 @@ class AgentActions:
 
         elif isinstance(outcome, model.LeakedNodesId):
             for node_id in outcome.nodes:
-                if self.__mark_node_as_discovered(node_id):
+                if self.mark_node_as_discovered(node_id):
                     newly_discovered_nodes += 1
                     newly_discovered_nodes_value += self._environment.get_node(node_id).value
 

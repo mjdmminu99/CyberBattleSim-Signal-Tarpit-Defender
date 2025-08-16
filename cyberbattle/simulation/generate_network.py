@@ -273,7 +273,7 @@ def new_environment(n_servers_per_protocol: int):
     """
     traffic = generate_random_traffic_network(
         seed=None,
-        n_clients=50,
+        n_clients=10,
         n_servers={
             "SMB": n_servers_per_protocol,
             "HTTP": n_servers_per_protocol,

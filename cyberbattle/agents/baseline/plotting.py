@@ -27,7 +27,6 @@ def pad(array, length):
     padding[: len(array)] = array
     return padding
 
-
 def plot_episodes_rewards_averaged(results):
     """Plot cumulative rewards for a given set of specified episodes"""
     max_iteration_count = np.max([len(r) for r in results["all_episodes_rewards"]])
@@ -39,7 +38,32 @@ def plot_episodes_rewards_averaged(results):
     x = [i for i in range(len(std))]
     plt.plot(x, avg, label=results["title"])
     plt.fill_between(x, avg - std, avg + std, alpha=0.5)
+'''
+def plot_episodes_rewards_averaged(results):
+    """Plot cumulative rewards for a given set of specified episodes"""
+    max_iteration_count = np.max([len(r) for r in results["all_episodes_rewards"]])
 
+    # Pad episodes to have the same length
+    all_episodes_rewards_padded = [pad(rewards, max_iteration_count) for rewards in results["all_episodes_rewards"]]
+
+    # Compute cumulative rewards
+    cumrewards = np.cumsum(all_episodes_rewards_padded, axis=1)
+    avg = np.average(cumrewards, axis=0)
+    std = np.std(cumrewards, axis=0)
+    x = [i for i in range(len(std))]
+
+    # Plot average cumulative rewards
+    plt.plot(x, avg, label=results["title"])
+    plt.fill_between(x, avg - std, avg + std, alpha=0.5)
+
+    # Compute threshold lines at 20%, 40%, and 60% of final average reward
+    max_avg_reward = np.max(avg)
+    for percent in [0.2, 0.4, 0.6]:
+        threshold = percent * max_avg_reward
+        plt.axhline(y=threshold, color='gray', linestyle='--', linewidth=1)
+
+    #plt.legend()
+'''
 
 def fill_with_latest_value(array, length):
     pad = length - len(array)

@@ -405,6 +405,10 @@ class CyberBattleEnv(CyberBattleSpaceKind):
     def bounds(self) -> EnvironmentBounds:
         return self.__bounds
 
+    @property
+    def discovered_nodes(self) -> List[model.NodeID]:
+        return self.__discovered_nodes
+
     def validate_environment(self, environment: model.Environment):
         """Validate that the size of the network and associated constants fits within
         the dimensions bounds set for the CyberBattle gym environment"""
@@ -1053,6 +1057,9 @@ class CyberBattleEnv(CyberBattleSpaceKind):
         while not self.apply_mask(action, action_mask):
             action = self.action_space.sample()
         return action
+
+    def set_node_discovered(self, node_id: model.NodeID) -> bool:
+        return self._actuator.mark_node_as_discovered(node_id)
 
     def __get_explored_network(self) -> networkx.DiGraph:
         """Returns the graph of nodes discovered so far
